@@ -167,6 +167,7 @@ main {
   display: flex;
   flex-direction: column;
   width: 350px;
+  max-height: 700px;
   padding: 15px;
   min-height: 100px;
   background-color: white;
