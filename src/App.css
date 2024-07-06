@@ -168,6 +168,7 @@ main {
   flex-direction: column;
   width: 350px;
   max-height: 700px;
+  overflow: scroll;
   padding: 15px;
   min-height: 100px;
   background-color: white;
