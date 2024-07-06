@@ -71,22 +71,33 @@ function App() {
                                 <div
                                   key={uuidv4()}
                                   className="block-simp-cat cursor-1"
-                                  onClick={(event) => {
-                                    event.preventDefault();
-                                    const newTabPanier = [...tabPanier];
-
-                                    const menu = {
-                                      title: meals.title,
-                                      price:
-                                        meals.price.replace(".", ",") + " €",
-                                      id: meals.id,
+                                  onClick={() => {
+                                    const addPanier = (meals) => {
+                                      const newTabPanier = [...tabPanier];
+                                      const indexToModify = tabPanier.findIndex(
+                                        (item) => item.id === meals.id
+                                      );
+                                      if (indexToModify === -1) {
+                                        const menu = {
+                                          title: meals.title,
+                                          price:
+                                            meals.price.replace(".", ",") +
+                                            " €",
+                                          id: meals.id,
+                                          quantity: 1,
+                                        };
+                                        newTabPanier.push(menu);
+                                      } else {
+                                        newTabPanier[indexToModify].quantity =
+                                          newTabPanier[indexToModify].quantity +
+                                          1;
+                                      }
+                                      setPanier(newTabPanier);
                                     };
+                                    addPanier(meals);
 
-                                    newTabPanier.push(menu);
                                     setCounterPrice(meals.price);
                                     setTitle(meals.title);
-
-                                    setPanier(newTabPanier);
 
                                     setCounterPrice(meals.price);
                                     setSousTotal(
