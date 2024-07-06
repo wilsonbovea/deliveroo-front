@@ -31,6 +31,40 @@ function App() {
     };
     fetchData();
   }, []);
+  const addPanier = (meals) => {
+    const newTabPanier = [...tabPanier];
+    const indexToModify = tabPanier.findIndex((item) => item.id === meals.id);
+    if (indexToModify === -1) {
+      const menu = {
+        title: meals.title,
+        price: meals.price.replace(".", ",") + " €",
+        id: meals.id,
+        quantity: 1,
+      };
+      newTabPanier.push(menu);
+    } else {
+      newTabPanier[indexToModify].quantity =
+        newTabPanier[indexToModify].quantity + 1;
+    }
+    setPanier(newTabPanier);
+  };
+  const removeQuantity = (meals) => {
+    const newTabPanier = [...tabPanier];
+
+    // A quel index se trouve le repas sur lequel on a cliqué
+    const indexToModify = tabPanier.findIndex((item) => item.id === meals.id);
+
+    if (meals.quantity === 1) {
+      // S'il est à 1 quantité, c'est qu'il sera à 0 après avoir soustrait 1 donc on le supprime direct du panier
+      newTabPanier.splice(indexToModify, 1);
+    } else {
+      // Soutrait 1 à la quantité existante
+      newTabPanier[indexToModify].quantity =
+        newTabPanier[indexToModify].quantity - 1;
+    }
+
+    setPanier(newTabPanier);
+  };
   const newTab = [dataOrig];
   return isLoading ? (
     <main>
@@ -72,34 +106,11 @@ function App() {
                                   key={uuidv4()}
                                   className="block-simp-cat cursor-1"
                                   onClick={() => {
-                                    const addPanier = (meals) => {
-                                      const newTabPanier = [...tabPanier];
-                                      const indexToModify = tabPanier.findIndex(
-                                        (item) => item.id === meals.id
-                                      );
-                                      if (indexToModify === -1) {
-                                        const menu = {
-                                          title: meals.title,
-                                          price:
-                                            meals.price.replace(".", ",") +
-                                            " €",
-                                          id: meals.id,
-                                          quantity: 1,
-                                        };
-                                        newTabPanier.push(menu);
-                                      } else {
-                                        newTabPanier[indexToModify].quantity =
-                                          newTabPanier[indexToModify].quantity +
-                                          1;
-                                      }
-                                      setPanier(newTabPanier);
-                                    };
                                     addPanier(meals);
 
                                     setCounterPrice(meals.price);
                                     setTitle(meals.title);
 
-                                    setCounterPrice(meals.price);
                                     setSousTotal(
                                       sousTotal + Number(meals.price)
                                     );
@@ -154,12 +165,30 @@ function App() {
                       <button className="allowed">Valider mon panier</button>
                       {tabPanier.map((menu) => {
                         return (
-                          <div key={uuidv4()}>
+                          <div className="menu-buttons" key={uuidv4()}>
+                            <div className="div-buttons">
+                              <button
+                                onClick={() => {
+                                  removeQuantity(menu);
+                                }}
+                              >
+                                -
+                              </button>
+                              <span>{menu.quantity}</span>
+                              <button
+                                onClick={() => {
+                                  addPanier(menu);
+                                }}
+                              >
+                                +
+                              </button>
+                            </div>
                             <Food
                               className1="menu"
                               className2="menu-title"
                               title={menu.title}
                               price={menu.price}
+                              quantity={menu.quantity}
                             />
                           </div>
                         );

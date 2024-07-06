@@ -219,9 +219,29 @@ main {
   display: flex;
   justify-content: space-between;
   padding: 10px 0px;
+  width: 100%;
+}
+.menu-buttons {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.div-buttons {
+  color: #8b9a9b;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.div-buttons button {
+  background-color: transparent;
+  border-radius: 50%;
+  border: 2px #00cebd solid;
+}
+.div-buttons button:hover {
+  cursor: pointer;
 }
 .menu-title {
-  max-width: 200px;
+  max-width: 190px;
 }
 .allowed {
   height: 60px;

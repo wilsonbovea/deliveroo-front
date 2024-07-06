@@ -1,4 +1,4 @@
-const Food = ({ key, className1, className2, title, price }) => {
+const Food = ({ quantity, className1, className2, title, price }) => {
   return (
     <div className={className1}>
       <span className={className2}>{title}</span>
