@@ -118,6 +118,9 @@ h3 {
   gap: 10px;
   justify-content: end;
 }
+.hidden {
+  display: none;
+}
 .parag {
   width: 100%;
   max-height: 60px;
@@ -139,6 +142,7 @@ h3 {
 .img-categorie-div {
   min-width: 130px;
   height: 130px;
+  width: 150px;
 }
 .img-categorie {
   width: 100%;
@@ -236,6 +240,7 @@ main {
   background-color: transparent;
   border-radius: 50%;
   border: 2px #00cebd solid;
+  color: #00cebd;
 }
 .div-buttons button:hover {
   cursor: pointer;
@@ -290,6 +295,9 @@ main {
   .div-section {
     gap: 30px;
   }
+  .hidden {
+    display: none;
+  }
 }
 @media (max-width: 885px) {
   .le-pain {
@@ -321,16 +329,19 @@ main {
     flex-direction: column;
     width: 100%;
     padding: 15px;
-    min-height: 100px;
+    /* min-height: 100px; */
     background-color: white;
     gap: 10px;
     box-shadow: 0px 8px 15px 7px rgb(222, 222, 222);
     position: fixed;
-    top: 75%;
+    top: 430px;
     left: 0;
     overflow: scroll;
-    height: 150px;
+    max-height: 300px;
     margin-top: 30px;
+  }
+  .allowed {
+    flex-shrink: 0;
   }
   .div-section {
     flex-direction: column;
@@ -346,4 +357,25 @@ main {
     position: sticky;
     top: 0px;
   }
+}
+.none {
+  display: none;
+}
+.hidden {
+  display: flex;
+  justify-content: flex-end;
+
+  padding: 4px;
+  text-align: center;
+}
+.icon-X {
+  border: 2px solid #00cebd;
+  border-radius: 50%;
+  height: 20px;
+  width: 20px;
+  padding: 2px;
+  color: #00cebd;
+}
+.icon-X:hover {
+  cursor: pointer;
 }

@@ -12,9 +12,8 @@ function App() {
   const [tabPanier, setPanier] = useState([]);
   const [title, setTitle] = useState("");
   const [sousTotal, setSousTotal] = useState(0);
-
+  const [display, setDisplay] = useState(0);
   const livraison = 2.5;
-  const total = livraison + sousTotal;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -46,25 +45,30 @@ function App() {
       newTabPanier[indexToModify].quantity =
         newTabPanier[indexToModify].quantity + 1;
     }
+    const price = meals.price.replace(" €", "");
+    setSousTotal(sousTotal + parseFloat(price));
     setPanier(newTabPanier);
   };
+
+  const total = livraison + sousTotal;
+
   const removeQuantity = (meals) => {
     const newTabPanier = [...tabPanier];
 
-    // A quel index se trouve le repas sur lequel on a cliqué
     const indexToModify = tabPanier.findIndex((item) => item.id === meals.id);
 
     if (meals.quantity === 1) {
-      // S'il est à 1 quantité, c'est qu'il sera à 0 après avoir soustrait 1 donc on le supprime direct du panier
       newTabPanier.splice(indexToModify, 1);
     } else {
-      // Soutrait 1 à la quantité existante
       newTabPanier[indexToModify].quantity =
         newTabPanier[indexToModify].quantity - 1;
     }
+    const price = meals.price.replace(" €", "");
 
+    setSousTotal(sousTotal - parseFloat(price));
     setPanier(newTabPanier);
   };
+
   const newTab = [dataOrig];
   return isLoading ? (
     <main>
@@ -107,13 +111,11 @@ function App() {
                                   className="block-simp-cat cursor-1"
                                   onClick={() => {
                                     addPanier(meals);
-
-                                    setCounterPrice(meals.price);
-                                    setTitle(meals.title);
-
                                     setSousTotal(
                                       sousTotal + Number(meals.price)
                                     );
+                                    setCounterPrice(meals.price);
+                                    setTitle(meals.title);
                                   }}
                                 >
                                   <div className="simp-categorie">
@@ -160,8 +162,17 @@ function App() {
                   })}
                 </section>
                 <div className="relative">
-                  {counterPrice !== 0 ? (
+                  {tabPanier.length !== 0 ? (
                     <div className="panier">
+                      {/* <div className="hidden">
+                        <i
+                          className="icon-X"
+                          onClick={() => {
+                            console.log("xxxxxxx");
+                            setDisplay(1);
+                          }}
+                        ></i>
+                      </div> */}
                       <button className="allowed">Valider mon panier</button>
                       {tabPanier.map((menu) => {
                         return (
